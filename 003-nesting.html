@@ -20,6 +20,16 @@
 	*
 	*/
 
+	var RecipeDisclaimer = React.createClass({
+		render: function (argument) {
+			return (
+			  <div>
+			    Disclaimer: None of the recipes have been tried out.
+			  </div>
+			)
+		}
+	});
+
 
 	var RecipeList = React.createClass({
 	  render: function() {
@@ -49,6 +59,7 @@
 	        Hello, world! I am a RecipeBook.
 	        <RecipeList/>
 	        <RecipeForm/>
+	        <RecipeDisclaimer/>
 	      </div>
 	    );
 	  }
