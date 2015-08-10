@@ -30,7 +30,11 @@
             focussed : false
           };
         },
-        handleClick : function() {
+        handleClickOuter: function () {
+          console.log('Click outer');
+        },
+        handleClick : function(e) {
+          console.log('Click inside');
           this.setState({
             dropDownIsOpen : !this.state.dropDownIsOpen,
             focussed: this.state.focussed
@@ -62,10 +66,12 @@
           var focusInformation = this.state.focussed ? this.renderFocus() : null;
 
           return (
-            <div onClick={this.handleClick} onMouseEnter={this.handleHover.bind(this,true)} onMouseLeave={this.handleHover.bind(this,false)}>
-              Click me!
-              {dropdown}
-              {focusInformation}
+            <div onClickCapture={this.handleClickOuter}>
+              <div onClick={this.handleClick} onMouseEnter={this.handleHover.bind(this,true)} onMouseLeave={this.handleHover.bind(this,false)}>
+                Click me!
+                {dropdown}
+                {focusInformation}
+              </div>
             </div>
           )
         }
