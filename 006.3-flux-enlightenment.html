@@ -89,20 +89,19 @@
                 return getRecipes();
             },
             storeDidChange: function() {
-                console.log('changed')
+                console.log('changed');
                 this.setState(getRecipes());
             },
             render: function() {
-                return <Recipes recipes={this.state.recipes} />;
+                return <Recipes recipes={this.state.recipes} currentRecipe={this.state.currentRecipe} />;
             }
         });
 
         /** Component */
 
         var Recipes = React.createClass({
-            addRecipe: function(){
-                RecipeActions.addRecipe(this.refs.inv.getDOMNode().value);
-                this.refs.inv.getDOMNode().value = "";
+            addRecipe: function(val){
+                RecipeActions.addRecipe(val);
             },
             clearRecipes: function(){
                 RecipeActions.clearRecipes();
@@ -111,9 +110,10 @@
                 RecipeActions.deleteRecipe(index);
             },
             render: function() {
+                var self = this;
                 var recipeNodes = this.props.recipes.map(function(recipe, index){
                         return <li key={index}>Recipe {recipe} <button type="button" onClick={self.deleteRecipe.bind(self, index)}>Delete</button></li>
-                    })
+                    });
                 /**
                 * HOMEWORK: Fix the form functionality:
                 *
@@ -128,14 +128,30 @@
                 */
                 return (
                 <div className="todos_app">
-                    <input type="text" value={this.props.HOMEWORK} ref="inv"/>
+                    <RecipeForm addRecipe={this.addRecipe} />
                     <ul className="recipes">
                         {recipeNodes}
                     </ul>
                     <button onClick={this.clearRecipes}>Clear</button>
-                    <button onClick={this.addRecipe}>Add</button>
+                    
                 </div>
                 )
+            }
+        });
+
+
+        var RecipeForm = React.createClass({
+
+            addButtonClicked: function() {
+                this.props.addRecipe(this.refs.inv.getDOMNode().value);
+                this.refs.inv.getDOMNode().value = "";
+            },
+            render: function  () {
+                return(<div>
+                            <input type="text" ref="inv"/>
+                            <button onClick={this.addButtonClicked}>Add</button>
+                        </div>
+                );
             }
         });
 
